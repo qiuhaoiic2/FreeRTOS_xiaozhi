@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "cStandard": "c99",
+            "compilerPath": "D:/gcc-arm-none-eabi-10.3-2021.10-win32/gcc-arm-none-eabi-10.3-2021.10/bin/arm-none-eabi-gcc",
+            "cppStandard": "c++11",
+            "defines": [
+                "USE_HAL_DRIVER",
+                "STM32F103xE"
+            ],
+            "intelliSenseMode": "windows-gcc-arm",
+            "name": "stm32f1",
+            "includePath": [
+                "${workspaceFolder}",
+                "${workspaceFolder}/Core/Inc",
+                "${workspaceFolder}/Drivers/CMSIS/Device/ST/STM32F1xx/Include",
+                "${workspaceFolder}/Drivers/CMSIS/Include",
+                "${workspaceFolder}/Drivers/STM32F1xx_HAL_Driver/Inc",
+                "${workspaceFolder}/Drivers/STM32F1xx_HAL_Driver/Inc/Legacy",
+                "${workspaceFolder}/MDK-ARM/RTE/_Demo01",
+                "${workspaceFolder}/third_lib/FreeRTOS/include",
+                "${workspaceFolder}/third_lib/FreeRTOS/portable/RVDS/ARM_CM3"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}

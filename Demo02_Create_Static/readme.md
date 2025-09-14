@@ -4,7 +4,6 @@
 ## 首先修改FreeRTOSConfig文件中开启静态创建的方法
 
 - `configSUPPORT_STATIC_ALLOCATION`将该宏定义定义为1
-- 我这里是关闭了动态创建，只留下了静态创建
 
 ## 补齐静态创建所需的函数
 - 在网站`https://www.freertos.org/zh-cn-cmn-s/Documentation/02-Kernel/03-Supported-devices/02-Customization#configsupport_static_allocation`
