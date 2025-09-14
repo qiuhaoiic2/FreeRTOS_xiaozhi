@@ -1,32 +1,44 @@
-# 第四个demo，until和delay的区别
+# Demo06_Binary_Task - FreeRTOS 二进制信号量示例
 
-- 可以明显观察到LED1是900ms的闪烁频率，LED2是500ms的闪烁频率
+## 项目概述
+本示例演示了FreeRTOS中二进制信号量（Binary Semaphore）的使用方法，通过按键控制LED灯的闪烁。
 
+## 功能描述
+- 使用二进制信号量实现任务间的同步通信
+- 按键任务检测按键按下事件，释放信号量
+- LED任务等待信号量，获取后切换LED状态
+- 日志任务负责输出调试信息
 
+## 任务架构
+| 任务名称 | 优先级 | 堆栈大小 | 功能描述 |
+|---------|--------|----------|----------|
+| log_task | 1 | 256 | 负责接收并打印日志消息 |
+| Led1_Task | 2 | 128 | 等待信号量，控制LED1状态切换 |
+| Key1_Task | 3 | 128 | 检测按键1，短按时释放信号量 |
+| Key2_Task | 3 | 128 | 检测按键2，短按时释放信号量 |
+| Key3_Task | 3 | 128 | 检测按键3，短按时释放信号量 |
 
-## 浅谈一下Systick
-- FreeRTOS的最小时间片，是一个Systick，如果Systick为1000hz，那么最小的tick就是1ms
-- 在代码中计算的所有运行时间都是tick，而不是ms，所以需要一些转换函数
-- 转换函数`pdMS_TO_TICKS();`是将tick转换为ms单位 
-- 转换函数`TICKS_TO_MS();`是将ms转换为tick单位
+## 工作原理
+1. **初始化阶段**：创建二进制信号量和各个任务
+2. **按键检测**：三个按键任务并行运行，检测按键短按事件
+3. **信号量释放**：任意按键短按时，对应的按键任务调用`xSemaphoreGive()`释放信号量
+4. **LED控制**：LED任务调用`xSemaphoreTake()`阻塞等待信号量，获取后切换LED状态
+5. **日志输出**：所有操作都会通过日志队列输出调试信息
 
-## 计算代码运行了多少tick
-- 使用函数xTaskGetTickCount();获取运行的tick时间
-```c
-    TickType_t xLastWakeTime;
-    xLastWakeTime = xTaskGetTickCount ();
-    code();// dosomethings
+## 关键API使用
+- `xSemaphoreCreateBinary()` - 创建二进制信号量
+- `xSemaphoreGive()` - 释放信号量
+- `xSemaphoreTake()` - 获取信号量（阻塞等待）
+- `xTaskCreate()` - 创建任务
+- `vTaskStartScheduler()` - 启动任务调度器
 
-    xLastWakeTime = xTaskGetTickCount () - xLastWakeTime;
-```
+## 预期效果
+- 系统启动后，LED处于关闭状态
+- 按下任意按键（短按），LED状态切换一次
+- 串口输出相应的日志信息，显示哪个任务释放/获取了信号量
 
-## delay 和 until的区别
-
-1. 假设有10个tick，现在两个任务分别用的`vTaskDelay(2);` ` vTaskDelayUntil(2,2);`假色两个任务执行结束的tick都是tick2
-
-2. 那么在vTaskDelay(2);这个任务中，2个tick已经过去了，任务变成了就绪态，但是因为优先级的问题 \\
-   或者其他任务正在执行导致CPU被抢占，实际执行该任务就有可能会变成tick6，或者tick10。
-   
-3. 而vTaskDelayUntil(2,2);这个任务中，会记录tick2时刻，并且在tick4时刻一定得到执行
-
-
+## 学习要点
+1. 理解二进制信号量的工作机制
+2. 掌握任务间同步通信的基本方法
+3. 学习如何使用信号量进行事件通知
+4. 了解多任务环境下的资源

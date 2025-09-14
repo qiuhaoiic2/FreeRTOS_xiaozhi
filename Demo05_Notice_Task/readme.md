@@ -1,32 +1,117 @@
-# 第四个demo，until和delay的区别
+# Demo05_Notice_Task - FreeRTOS 任务通知示例
 
-- 可以明显观察到LED1是900ms的闪烁频率，LED2是500ms的闪烁频率
+## 项目简介
+本示例演示了 FreeRTOS 中任务通知（Task Notification）的使用方法。任务通知是一种轻量级的任务间通信机制，可以替代信号量、事件标志组等同步原语，具有更高的执行效率和更少的内存开销。
 
+## 主要功能
+- **任务通知机制**：使用 `xTaskNotifyGive()` 和 `ulTaskNotifyTake()` 实现任务间通信
+- **按键控制**：通过按键触发任务通知
+- **LED 控制**：LED 任务接收通知后切换状态
+- **日志系统**：记录任务执行状态
 
+## 系统架构
 
-## 浅谈一下Systick
-- FreeRTOS的最小时间片，是一个Systick，如果Systick为1000hz，那么最小的tick就是1ms
-- 在代码中计算的所有运行时间都是tick，而不是ms，所以需要一些转换函数
-- 转换函数`pdMS_TO_TICKS();`是将tick转换为ms单位 
-- 转换函数`TICKS_TO_MS();`是将ms转换为tick单位
+### 任务结构
+1. **Led_Task**（3个实例）
+   - 优先级：2
+   - 堆栈大小：128 字节
+   - 功能：等待任务通知，接收到通知后切换对应 LED 状态
 
-## 计算代码运行了多少tick
-- 使用函数xTaskGetTickCount();获取运行的tick时间
+2. **Key_Task**（3个实例）  
+   - 优先级：3
+   - 堆栈大小：128 字节
+   - 功能：扫描按键，检测到短按后发送任务通知给对应的 LED 任务
+
+3. **log_task**
+   - 优先级：1
+   - 堆栈大小：256 字节
+   - 功能：处理日志消息输出
+
+### 通信机制
+- **任务通知**：Key_Task 通过 [`xTaskNotifyGive()`](Demo05_Notice_Task/Core/Src/rtos_main.c) 向对应的 LED 任务发送通知
+- **日志队列**：使用 [`xLogQueue`](Demo05_Notice_Task/Core/Src/log.c) 进行日志消息传递
+
+## 核心 API 使用
+
+### 任务通知 API
 ```c
-    TickType_t xLastWakeTime;
-    xLastWakeTime = xTaskGetTickCount ();
-    code();// dosomethings
+// 发送通知（递增通知值）
+xTaskNotifyGive(TaskHandle_t xTaskToNotify);
 
-    xLastWakeTime = xTaskGetTickCount () - xLastWakeTime;
+// 等待并获取通知（清零通知值）
+ulTaskNotifyTake(BaseType_t xClearCountOnExit, TickType_t xTicksToWait);
 ```
 
-## delay 和 until的区别
+### 关键代码片段
 
-1. 假设有10个tick，现在两个任务分别用的`vTaskDelay(2);` ` vTaskDelayUntil(2,2);`假色两个任务执行结束的tick都是tick2
+#### LED 任务实现
+```c
+static void Led_Task(void *para)
+{
+    gpio_config_t *led = (gpio_config_t *)para;
+    GPIO_Init_Universal(led);
+    GPIO_Write_High(led);
+    
+    while (1)
+    {
+        ulTaskNotifyTake(pdTRUE, portMAX_DELAY);  // 等待通知
+        log_print("%s get notice", pcTaskGetName(NULL));
+        GPIO_Toggle_Pin(led);  // 切换 LED 状态
+    }
+}
+```
 
-2. 那么在vTaskDelay(2);这个任务中，2个tick已经过去了，任务变成了就绪态，但是因为优先级的问题 \\
-   或者其他任务正在执行导致CPU被抢占，实际执行该任务就有可能会变成tick6，或者tick10。
-   
-3. 而vTaskDelayUntil(2,2);这个任务中，会记录tick2时刻，并且在tick4时刻一定得到执行
+#### 按键任务实现
+```c
+static void Key_Task(void *para)
+{
+    gpio_config_t *key = (gpio_config_t *)para;
+    key_event_t key_value = KEY_NONE;
+    GPIO_Init_Universal(key);
+    
+    while (1)
+    {
+        key_value = key_scan(key);
+        if (key_value == KEY_SHORT)
+        {
+            // 根据按键发送对应的任务通知
+            if (key == &key1) xTaskNotifyGive(Led1_Handle);
+            if (key == &key2) xTaskNotifyGive(Led2_Handle);
+            if (key == &key3) xTaskNotifyGive(Led3_Handle);
+            log_print("%s give notice", pcTaskGetName(NULL));
+        } 
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
+}
+```
 
+## 工作流程
+1. 系统启动后创建 3 个 LED 任务和 3 个按键任务
+2. LED 任务进入阻塞状态，等待任务通知
+3. 按键任务持续扫描按键状态
+4. 当检测到按键短按时，向对应的 LED 任务发送通知
+5. LED 任务收到通知后，切换 LED 状态并输出日志
+6. 循环执行上述过程
 
+## 硬件要求
+- STM32F1xx 系列微控制器
+- 3 个 LED（led1, led2, led3）
+- 3 个按键（key1, key2, key3）
+- UART 用于日志输出
+
+## 任务通知的优势
+1. **高效性**：比队列、信号量等机制更快
+2. **低内存占用**：不需要额外的内核对象
+3. **简单性**：API 简洁易用
+4. **灵活性**：支持多种通知模式（计数、位操作等）
+
+## 编译和运行
+1. 使用 STM32CubeIDE 或 Keil MDK 打开项目
+2. 编译并下载到目标硬件
+3. 通过串口查看日志输出
+4. 按下按键观察对应 LED 的状态变化
+
+## 注意事项
+- 任务通知是单向的，只能从一个任务发送到另一个任务
+- 每个任务只有一个通知值，如果需要多个通知源，需要合理设计通知机制
+- 本示例使用了计数型通知，适合简单的同
