@@ -3,6 +3,7 @@
 
 
 #include "main.h"
+#include "gpio.h"
 
 typedef enum {
     KEY_NONE = 0,
@@ -17,6 +18,8 @@ typedef struct {
     uint8_t press_flag;     // 已按下标记
     uint32_t down_time;   // 按下时间
 } key_state_t;
+
+
 
 extern gpio_config_t key1;
 extern gpio_config_t key2;

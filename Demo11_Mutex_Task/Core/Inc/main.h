@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stdbool.h>
 
 // HAL库函数
 #include "stm32f1xx_hal.h"
@@ -14,12 +15,12 @@
 
 // 用户自定义头文件
 #include "gpio.h"
-#include "led.h"
 #include "uart.h"
-#include "key.h"
+
+
 //rtos 头文件
-#include "log.h"
 #include "rtos_main.h"
+#include "log.h"
 
 
 #endif /* __MAIN_H */

@@ -6,10 +6,11 @@
 
 QueueHandle_t xLogQueue = NULL;
 
-void log_init(void)
+int8_t log_init(void)
 {
     xLogQueue = xQueueCreate(LOG_QUEUE_LEN, LOG_MAX_LEN);
-    
+    configASSERT(xLogQueue != NULL);
+    return (xLogQueue != NULL) ? 0 : -1;
 }
 
 /* 业务任务调用：非阻塞发送 */
@@ -25,3 +26,5 @@ BaseType_t log_print(const char *fmt, ...)
     res = xQueueSendToBack(xLogQueue, buf, 0);
     return res;
 }
+
+

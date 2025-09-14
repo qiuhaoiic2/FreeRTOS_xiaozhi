@@ -3,11 +3,9 @@
 
 #include "main.h"
 
-#include "stdbool.h"
-
 typedef struct {
     GPIO_TypeDef *GpioPort;   // GPIO 端口（GPIOA、GPIOB...）
-    uint32_t Pin;             // GPIO 引脚（GPIO_PIN_0...）
+    uint16_t Pin;             // GPIO 引脚（GPIO_PIN_0...）
     uint32_t Mode;            // 模式（输入/输出/复用...）
     uint32_t Pull;            // 上拉/下拉（GPIO_NOPULL, GPIO_PULLUP...）
     uint32_t Speed;           // 速度（GPIO_SPEED_FREQ_LOW...）

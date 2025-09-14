@@ -1,24 +1,24 @@
 #include "key.h"
 
 gpio_config_t key1 = {
-    .GpioPort = GPIOA,
-    .Pin      = GPIO_PIN_0,
+    .GpioPort = GPIOC,
+    .Pin      = GPIO_PIN_3,
     .Mode     = GPIO_MODE_IT_FALLING,
     .Pull     = GPIO_PULLUP,
     .Speed    = GPIO_SPEED_FREQ_LOW,
     .value    = 1
 };
 gpio_config_t key2 = {
-    .GpioPort = GPIOA,
-    .Pin      = GPIO_PIN_0,
+    .GpioPort = GPIOC,
+    .Pin      = GPIO_PIN_2,
     .Mode     = GPIO_MODE_INPUT,
     .Pull     = GPIO_PULLUP,
     .Speed    = GPIO_SPEED_FREQ_LOW,
     .value    = 1
 };
 gpio_config_t key3 = {
-    .GpioPort = GPIOA,
-    .Pin      = GPIO_PIN_0,
+    .GpioPort = GPIOC,
+    .Pin      = GPIO_PIN_1,
     .Mode     = GPIO_MODE_INPUT,
     .Pull     = GPIO_PULLUP,
     .Speed    = GPIO_SPEED_FREQ_LOW,
@@ -51,19 +51,10 @@ key_event_t key_scan(gpio_config_t *key)
 
     if (key->value == 0)
     {
-        key_s->press_flag = KEY_PRESS;
-    }
-    else if (key->value == 1)
-    {
-        key_s->press_flag = KEY_RELEASE;
-    }
-
-    if (key_s->press_flag == KEY_PRESS)
-    {
         key_s->last_level = 1;
         key_s->down_time = HAL_GetTick();
     }
-    if (key_s->press_flag == KEY_RELEASE && key_s->last_level == 1)
+    if (key->value == 1 && key_s->last_level == 1)
     {
         key_s->last_level = 0;
         key_s->down_time = HAL_GetTick() - key_s->down_time;

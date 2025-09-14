@@ -22,8 +22,8 @@ extern uint32_t SystemCoreClock;
 #define configUSE_TASK_NOTIFICATIONS                                1    // 任务通知相关的api
 #define configTASK_NOTIFICATION_ARRAY_ENTRIES                       1    // 任务通知数组的索引(10.4.0之前索引只有一个)
 #define configUSE_MUTEXES                                           1    // 互斥锁功能
-#define configUSE_RECURSIVE_MUTEXES                                 0    // 递归互斥锁功能
-#define configUSE_COUNTING_SEMAPHORES                               0    // 计数信号量
+#define configUSE_RECURSIVE_MUTEXES                                 1    // 递归互斥锁功能
+#define configUSE_COUNTING_SEMAPHORES                               1    // 计数信号量
 
 #define configQUEUE_REGISTRY_SIZE                                   10   // 定义可以注册的队列和信号量的最大数量
 #define configUSE_QUEUE_SETS                                        0    // 队列集
@@ -39,9 +39,9 @@ extern uint32_t SystemCoreClock;
 /* Memory allocation related definitions. */
 
 
-#define configSUPPORT_STATIC_ALLOCATION                             0   //静态申请内存，如果为1使能静态创建，并且需要实现两个函数
+#define configSUPPORT_STATIC_ALLOCATION                             0   //静态申请内存，如果为1使能静态创建，并且需要实现两个f函数
 #define configSUPPORT_DYNAMIC_ALLOCATION                            1   //动态申请内存
-#define configTOTAL_HEAP_SIZE                                       ((size_t)(10*1024)) //堆栈申请10kb的内存，最小单位为byte字节,在heap文件按
+#define configTOTAL_HEAP_SIZE                                       ((size_t)(10*1024)) //堆栈申请10kb的内存，最小单位为byte字节
 #define configAPPLICATION_ALLOCATED_HEAP                            0   //用户手动分配堆在内存中的位置，默认为0，由freertos自动分配
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP                   0   //用户手动实现创建任务的堆栈分配、释放函数，默认为0
 

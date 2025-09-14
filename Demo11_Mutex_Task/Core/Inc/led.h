@@ -3,6 +3,7 @@
 
 
 #include "main.h"
+#include "gpio.h"
 
 extern gpio_config_t led1;
 extern gpio_config_t led2;

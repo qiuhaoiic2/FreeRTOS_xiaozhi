@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.ld": "arm",
+        "*.bin": "code-text-binary",
+        "exit.h": "c",
+        "main.h": "c"
+    }
+}
