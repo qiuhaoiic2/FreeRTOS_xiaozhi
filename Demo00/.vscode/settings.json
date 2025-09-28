@@ -1,0 +1,15 @@
+{
+    "files.associations": {
+        "*.ld": "arm",
+        "*.bin": "code-text-binary",
+        "gpio.h": "c",
+        "main.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "stm32f1xx_hal_conf.h": "c",
+        "portmacro.h": "c",
+        "deprecated_definitions.h": "c",
+        "freertos_process.h": "c",
+        "freertos.h": "c",
+        "task.h": "c"
+    }
+}
