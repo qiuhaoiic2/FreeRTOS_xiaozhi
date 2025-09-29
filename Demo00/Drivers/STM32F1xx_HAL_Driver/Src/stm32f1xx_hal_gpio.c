@@ -175,7 +175,7 @@
   *         the configuration information for the specified GPIO peripheral.
   * @retval None
   */
-void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
+void  HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 {
   uint32_t position = 0x00u;
   uint32_t ioposition;
@@ -206,8 +206,8 @@ void HAL_GPIO_Init(GPIO_TypeDef  *GPIOx, GPIO_InitTypeDef *GPIO_Init)
 
       /* Based on the required mode, filling config variable with MODEy[1:0] and CNFy[3:2] corresponding bits */
       switch (GPIO_Init->Mode)
-      {
         /* If we are configuring the pin in OUTPUT push-pull mode */
+      {
         case GPIO_MODE_OUTPUT_PP:
           /* Check the GPIO speed parameter */
           assert_param(IS_GPIO_SPEED(GPIO_Init->Speed));

@@ -10,6 +10,17 @@
         "deprecated_definitions.h": "c",
         "freertos_process.h": "c",
         "freertos.h": "c",
-        "task.h": "c"
-    }
+        "task.h": "c",
+        "spi.h": "c",
+        "oled.h": "c",
+        "font.h": "c",
+        "oledfont.h": "c",
+        "string.h": "c",
+        "tempearature.h": "c",
+        "stdio.h": "c",
+        "i2c.h": "c",
+        "temperature.h": "c",
+        "stdint.h": "c"
+    },
+    "files.encoding": "gb2312"
 }

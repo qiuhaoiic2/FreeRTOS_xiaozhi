@@ -1,49 +1,32 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file    gpio.h
-  * @brief   This file contains all the function prototypes for
-  *          the gpio.c file
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __GPIO_H__
 #define __GPIO_H__
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* USER CODE BEGIN Includes */
 
-/* USER CODE END Includes */
 
-/* USER CODE BEGIN Private defines */
+typedef struct {
+    GPIO_TypeDef *GpioPort;   // GPIO 端口（GPIOA、GPIOB...）
+    uint16_t Pin;             // GPIO 引脚（GPIO_PIN_0...）
+    uint32_t Mode;            // 模式（输入/输出/复用...）
+    uint32_t Pull;            // 上拉/下拉（GPIO_NOPULL, GPIO_PULLUP...）
+    uint32_t Speed;           // 速度（GPIO_SPEED_FREQ_LOW...）
+		uint8_t  value;           // 按键读取的value
 
-/* USER CODE END Private defines */
+} gpio_config_t;
 
-void MX_GPIO_Init(void);
+extern gpio_config_t led1;
+extern gpio_config_t led2;
+extern gpio_config_t led3;
 
-/* USER CODE BEGIN Prototypes */
 
-/* USER CODE END Prototypes */
+int8_t GPIO_Init_Universal(gpio_config_t *config);
+int8_t GPIO_Write_High(gpio_config_t *config);
+int8_t GPIO_Write_Low(gpio_config_t *config);
+int8_t GPIO_Toggle_Pin(gpio_config_t *config);
+int8_t GPIO_Read_Pin(gpio_config_t *config);
 
-#ifdef __cplusplus
-}
-#endif
+
+
 #endif /*__ GPIO_H__ */
 
