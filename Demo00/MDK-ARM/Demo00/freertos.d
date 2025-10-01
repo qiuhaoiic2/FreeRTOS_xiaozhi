@@ -38,12 +38,14 @@ demo00\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 demo00\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 demo00\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 demo00\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+demo00\freertos.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 demo00\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 demo00\freertos.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 demo00\freertos.o: ../Core/Inc/gpio.h
 demo00\freertos.o: ../Core/Inc/led.h
-demo00\freertos.o: ../Core/Inc/spi.h
 demo00\freertos.o: ../Core/Inc/oled.h
-demo00\freertos.o: ../Core/Inc/i2c.h
 demo00\freertos.o: ../Core/Inc/temperature.h
+demo00\freertos.o: ../Core/Inc/i2c.h
 demo00\freertos.o: ../Core/Inc/key.h
+demo00\freertos.o: ../Core/Inc/dc_motor.h
+demo00\freertos.o: ../Core/Inc/step_motor.h

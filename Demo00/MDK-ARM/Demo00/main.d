@@ -29,6 +29,7 @@ demo00\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h
 demo00\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_spi.h
 demo00\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h
 demo00\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h
+demo00\main.o: ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h
 demo00\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 demo00\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 demo00\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
@@ -40,3 +41,4 @@ demo00\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3/
 demo00\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 demo00\main.o: ../Core/Inc/gpio.h
 demo00\main.o: ../Core/Inc/i2c.h
+demo00\main.o: ../Core/Inc/tim.h

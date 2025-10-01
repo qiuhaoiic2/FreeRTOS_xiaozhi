@@ -95,6 +95,11 @@ to exclude the API function. */
 #define INCLUDE_uxTaskGetStackHighWaterMark 1
 #define INCLUDE_eTaskGetState               1
 
+//#define configGENERATE_RUN_TIME_STATS 1
+//#define configUSE_TRACE_FACILITY 1
+//#define configUSE_STATS_FORMATTING_FUNCTIONS 1
+//#define configCHECK_FOR_STACK_OVERFLOW 2
+
 /*
  * The CMSIS-RTOS V2 FreeRTOS wrapper is dependent on the heap implementation used
  * by the application thus the correct define need to be enabled below
