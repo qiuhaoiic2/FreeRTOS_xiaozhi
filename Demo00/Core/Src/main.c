@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "i2c.h"
+#include "tim.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -82,6 +83,8 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 	MX_I2C2_Init();
+	MX_TIM1_Init();
+	HAL_TIMEx_PWMN_Start(&htim1,TIM_CHANNEL_3);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */

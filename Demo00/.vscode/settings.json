@@ -20,7 +20,11 @@
         "stdio.h": "c",
         "i2c.h": "c",
         "temperature.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "dc_motor.h": "c",
+        "step_motor.h": "c",
+        "uart.h": "c",
+        "tim.h": "c"
     },
     "files.encoding": "gb2312"
 }
